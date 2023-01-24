@@ -8,4 +8,5 @@
 #define maxFileSize 1000
 #define ASCI 48
 #define maxSingleInput 100
+#define maxBufferSize 1000
 

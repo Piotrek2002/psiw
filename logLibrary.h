@@ -23,3 +23,4 @@
 #define finished "Receiver Finished\n\n"
 #define wrongProcessNumber "The program was given wrong number of arguments!\nPlease provide only one process name!\n"
 #define createdQueueId "Created queue ID: %d\n\n"
+#define requestInfo "Please provide \"exit\" or input in format:\nprocess \"command_to_execute\" \"answer_fifo_queue\"\n> "
