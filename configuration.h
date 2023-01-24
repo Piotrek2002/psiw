@@ -14,7 +14,7 @@ int getBeginOfKey(const char *buf,char *pn, const char *p){
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include "errorLibrary.h"
+#include "logLibrary.h"
 #include "staticData.h"
 
 int findKey(char *pn) {

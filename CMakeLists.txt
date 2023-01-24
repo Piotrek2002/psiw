@@ -3,4 +3,4 @@ project(psiw C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(psiw main.c validation.h printer.h errorLibrary.h configuration.h staticData.h)
+add_executable(psiw main.c validation.h printer.h logLibrary.h configuration.h staticData.h)
