@@ -51,7 +51,7 @@ void prepareSenderData() {
     }
 }
 
-void unlinkWithError(char *error){
+void unlinkWithError(char *error) {
     perror(error);
     unlink(senderStructure.fifo);
 }
@@ -86,6 +86,7 @@ void sender() {
         }
 
         message.type = 1;
+
         strcpy(message.cmd, senderStructure.cmd);
         strcpy(message.fifo, senderStructure.fifo);
 
@@ -124,7 +125,32 @@ void sender() {
     }
 }
 
+_Noreturn void receiver(int qId) {
+    while (1) {
+        if (msgrcv(qId, &message, sizeof(message), 1, 0) < 0) {
+            perror(receivingMessageError);
+            continue;
+        }
 
+        printf(startingReceiver, message.cmd);
+
+        int fifoFd = open(message.fifo, O_WRONLY);
+        if (fifoFd < 0) {
+            perror(openingFIFOError);
+            continue;
+        }
+
+        if (fork() == 0) {
+
+            close(1);
+            dup2(fifoFd, 1);
+            execl("/bin/sh", "/bin/sh", "-c", message.cmd, 0);
+
+        }
+        wait(0);
+
+    }
+}
 
 int main(int argc, char *argv[]) {
     printArgs(argc, argv);
@@ -152,13 +178,13 @@ int main(int argc, char *argv[]) {
 
     int pId = fork();
 
-    if (pId==-1){
+    if (pId == -1) {
         perror(forkingProcessError);
         msgctl(qId, IPC_RMID, NULL);
         return 1;
-    } else if (pId==0){
+    } else if (pId == 0) {
         receiver(qId);
-    } else{
+    } else {
         sender();
     }
 

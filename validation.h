@@ -7,7 +7,6 @@
 
 int checkInput(char *buf) {
 
-    //usr2 “ls -l | tr a-z A-Z” “fifo”
     int i = 0;
     int size = strlen(buf);
     int j = 0;
