@@ -135,35 +135,37 @@ int main(int argc, char *argv[]) {
     }
 
 
-    int qkey = findKey(argv[1]);
-    if (qkey < 0) {
+    int qKey = findKey(argv[1]);
+    if (qKey < 0) {
         perror(findingQueueKeyError);
         return 1;
     }
 
 
-    int qid = msgget(qkey, IPC_CREAT | 0666);
-    if (0 > qid) {
+    int qId = msgget(qKey, IPC_CREAT | 0666);
+    if (0 > qId) {
         perror(creatingQueueError);
         return 1;
     }
-    printf(createdQueueId, qid);
+    printf(createdQueueId, qId);
 
 
-    int pid = fork();
-    switch (pid) {
-        case -1:
-            perror(forkingProcessError);
-            msgctl(qid, IPC_RMID, NULL);
-            return 1;
-        default:
-            sender();
+    int pId = fork();
+
+    if (pId==-1){
+        perror(forkingProcessError);
+        msgctl(qId, IPC_RMID, NULL);
+        return 1;
+    } else if (pId==0){
+        receiver(qId);
+    } else{
+        sender();
     }
 
 
-    msgctl(qid, IPC_RMID, NULL);
+    msgctl(qId, IPC_RMID, NULL);
 
-    kill(pid, SIGKILL);
+    kill(pId, SIGKILL);
 
     return 0;
 }
