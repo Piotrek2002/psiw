@@ -2,6 +2,13 @@
 // Created by Piotr Krzyszowski.
 //
 
+#include <sys/fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include "logLibrary.h"
+#include "staticData.h"
+
 int checkValidProcessName(const char *buf,char *pn, const char *p) {
     return p[strlen(pn)] != ' ' || (p - buf - 1 >= 0 && buf[p - buf - 1] != '\n');
 }
@@ -9,13 +16,6 @@ int checkValidProcessName(const char *buf,char *pn, const char *p) {
 int getBeginOfKey(const char *buf,char *pn, const char *p){
     return strlen(buf) - strlen(p) + strlen(pn) + 3;
 }
-
-#include <sys/fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include "logLibrary.h"
-#include "staticData.h"
 
 int findKey(char *pn) {
     int fd = open(configFile, O_RDONLY);
