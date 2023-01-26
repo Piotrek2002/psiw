@@ -33,13 +33,13 @@ int findKey(char *pn) {
 
     char *p = strstr(buf, pn);
     if (p == NULL) {
-        printf("Process not found!\n");
+        printf(processNotFound);
         close(fd);
         return -1;
     }
 
     if (checkValidProcessName(buf,pn,p)) {
-        printf("Wrong process name!\n");
+        printf(wrongProcessName);
         close(fd);
         return -1;
     }
@@ -54,7 +54,7 @@ int findKey(char *pn) {
         i++;
     }
 
-    printf("QUEUE key: %d\n", qKey);
+    printf(queueKey, qKey);
 
     close(fd);
     return qKey;

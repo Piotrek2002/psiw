@@ -62,8 +62,8 @@ void sender() {
 
         printf(requestInfo);
 
-        scanf("%[^\n]s", senderStructure.buf);
-        scanf("%*c");
+        scanf(scanLine, senderStructure.buf);
+        scanf(ignoreScan);
 
         if (!strcmp(senderStructure.buf, "exit")) {
             printf(exit);
